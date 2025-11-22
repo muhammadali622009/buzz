@@ -1,0 +1,9 @@
+(function(){"use strict";const n="consent-manager",o=document.createElement("div");o.id=n,document.body.appendChild(o);var a=`
+    #consent-manager {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 100;
+    }
+    `,c=document.head||document.getElementsByTagName("head")[0],e=document.createElement("style");if(c.appendChild(e),e.type="text/css",e.styleSheet?e.styleSheet.cssText=a:e.appendChild(document.createTextNode(a)),window.consentManagerConfig=function(r){var i=r.React,s=i.createElement("div",null,"We use cookies to improve your experience and give you personalized content. Do you agree to our "," ",i.createElement("a",{href:"https://buzzsumo.com/legal/cookie-policy/",style:{color:"#239edb"},target:"_blank"},"cookie policy?"));return{container:`#${n}`,writeKey:"CN9YtbHn9oYrkLXy6jhwVtEL15Wm1vJA",bannerContent:s,bannerSubContent:"No, take me to settings",preferencesDialogTitle:"Website Data Collection",preferencesDialogContent:"We use data collected by cookies and JavaScript libraries.",cancelDialogTitle:"🤔Are you sure you want to cancel?",cancelDialogContent:"Your preferences have not been saved."}},!window.EXPORT){var t=document.createElement("script");t.type="text/javascript",t.src="https://app.buzzsumo.com/consent-manager.js",c.appendChild(t)}})();

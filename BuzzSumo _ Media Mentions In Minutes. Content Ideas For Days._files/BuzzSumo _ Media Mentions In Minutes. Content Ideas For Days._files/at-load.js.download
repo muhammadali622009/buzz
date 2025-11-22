@@ -1,0 +1,62 @@
+// NB - we have to wrap all this in our cookie consent check
+//    - and this is client-side because the cookie check cannot run server side due to server side caching
+
+var initial__location = global_get_geo_cookie();
+var initial__is_gdpr = initial__location && global_is_gdpr_country(initial__location);
+var approval_cookie = global_get_cookie('bw_cookies__strict__approved__statistical');
+
+// BuzzSumo
+var tracking_prefs_cookies = global_get_cookie('tracking-preferences');
+
+function global_load_optimizely() {
+  const script = document.createElement('script')
+  script.src = location.href.includes('brandwatch') ? 'https://cdn.optimizely.com/js/20151573008.js' : 'https://cdn.optimizely.com/js/20134236241.js';
+  script.setAttribute('defer', '');
+  const head = document.querySelector('head')
+  head.insertBefore(script, head.firstChild)
+}
+
+if (tracking_prefs_cookies) {
+  try {
+    var prefs = JSON.parse(decodeURIComponent(tracking_prefs_cookies));
+
+    if (prefs.destinations.Optimizely) {
+      global_load_optimizely();
+    }
+    if (prefs.custom.advertising) {
+      // StackAdapt 
+      !function (s, a, e, v, n, t, z) { if (s.saq) return; n = s.saq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) }; if (!s._saq) s._saq = n; n.push = n; n.loaded = !0; n.version = '1.0'; n.queue = []; t = a.createElement(e); t.async = !0; t.src = v; z = a.getElementsByTagName(e)[0]; z.parentNode.insertBefore(t, z) }(window, document, 'script', 'https://tags.srv.stackadapt.com/events.js'); saq('ts', '4V3ykr5otncxjlQiCMMu6A');
+    }
+  } catch (e) { }
+}
+
+// If approval_cookie is N, user is gdpr and has previously rejected the scripts
+if (approval_cookie === 'N') {
+  // do nothing
+}
+
+// If approval_cookie has been previously set to Y, user must be gdpr and previously accepted
+else if (approval_cookie === 'Y') {
+  global_load_optimizely();
+
+
+}
+
+// else if (approval_cookie === null) {
+  // If we know the location and the user is not gdpr, can load immediately
+  // if (initial__location && !initial__is_gdpr) {
+   //  global_load_optimizely();
+  // }
+
+  // If we don't yet know the location, get location and then load if user is not gdpr
+  // else {
+    // window.global_geo_ip_promise
+      // .then(function (location) {
+        // var is_gdpr_region = global_is_gdpr_country(location);
+        // if (!is_gdpr_region) {
+         //  global_load_optimizely();
+       //  }
+      // });
+  //}
+// }
+
