@@ -297,12 +297,16 @@
     gap: 28px;
     margin-top: 50px;
 }
+.offer{
+     box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+}
 .card{
     width: 90%;
     box-shadow:  black;
     padding: 10px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius:10px ;
+   
 
     
 }
